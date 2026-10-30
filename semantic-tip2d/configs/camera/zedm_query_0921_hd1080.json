@@ -1,0 +1,37 @@
+{
+  "note": "Converted from data/query_0921/zedm_intrinsics.json. Rectified HD1080 stereo; source units converted from millimeters to meters for translation.",
+  "width": 1920,
+  "height": 1080,
+  "left": {
+    "fx": 1432.1136474609375,
+    "fy": 1432.1136474609375,
+    "cx": 980.4578247070312,
+    "cy": 520.7237548828125
+  },
+  "right": {
+    "fx": 1432.1136474609375,
+    "fy": 1432.1136474609375,
+    "cx": 980.4578247070312,
+    "cy": 520.7237548828125
+  },
+  "left_rect": {
+    "fx": 1432.1136474609375,
+    "fy": 1432.1136474609375,
+    "cx": 980.4578247070312,
+    "cy": 520.7237548828125
+  },
+  "right_rect": {
+    "fx": 1432.1136474609375,
+    "fy": 1432.1136474609375,
+    "cx": 980.4578247070312,
+    "cy": 520.7237548828125
+  },
+  "R_rodrigues": [0.0, 0.0, 0.0],
+  "t_meters": [0.06300471496582031, 0.0, 0.0],
+  "baseline_m": 0.06300471496582031,
+  "source": "data/query_0921/zedm_intrinsics.json",
+  "source_streams": {
+    "left": "*_zedm_L.png",
+    "right": "*_zedm_R.png"
+  }
+}
