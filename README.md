@@ -49,7 +49,7 @@ flowchart TD
 | 문서 | 내용 |
 |---|---|
 | [단계별 파이프라인](docs/PIPELINE.md) | 3.1~3.10과 4.1~4.4의 처리 로직, 상수, 단계별 결과 그림 |
-| [알고리즘 설명 PPT](docs/Semantic_Tip2D_현황.pptx) | 교수님 보고용 22장 자료. 구현 범위, 코드 구조, 속도, VETUS/pink 2D 결과와 한계 |
+| [알고리즘 설명 PPT](docs/Semantic_Tip2D_현황.pptx) | 구현 범위, 코드 구조, 속도, VETUS/pink 2D 결과와 한계 |
 | [알고리즘 설명 PDF](docs/Semantic_Tip2D_현황.pdf) | PPT와 같은 내용의 열람용 PDF |
 | [`docs/figures/`](docs/figures/) | 투영, 정렬, 법선 탐색, 사슬 추적, ridge, 코팅 경계, 스테레오 선택의 원본 그림 |
 
