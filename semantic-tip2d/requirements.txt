@@ -1,5 +1,0 @@
-# tested with Python 3.10.20, CUDA 11.8
-numpy==1.26.4
-opencv-python==4.13.0.*
-torch==2.5.1
-gsplat==1.5.3
