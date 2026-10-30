@@ -1,0 +1,17 @@
+{
+  "name": "VETUStweezers",
+  "semantic_axis": "objects/VETUStweezers/semantic_axis.json",
+  "tip_profile": "objects/VETUStweezers/tip_profile.json",
+  "gs_ply": "data/objects/VETUStweezers/point_cloud_semantic.ply",
+  "coat_polarity": 1,
+  "coat_subpix_clip": false,
+  "tip_length_mm": {
+    "tip1": 18.347309237992512,
+    "tip2": 17.708001523752102
+  },
+  "notes": {
+    "coat_polarity": "dark coating -> silver tip",
+    "coat_subpix_clip": "not needed",
+    "tip_length_mm": "stereo-measured coat -> end length (median over the 0921 frames)"
+  }
+}
