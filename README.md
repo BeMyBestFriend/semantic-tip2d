@@ -3,7 +3,7 @@
 **하는 일:** 물체의 6D pose가 주어졌을 때, 보정된(rectified) 스테레오 영상에서 집게(tweezer) 팁의 의미 기반 keypoint를 2D로 측정한다.
 - 팁 끝점
 - 팁 윤곽선(upper / lower)
-- 코팅 경계점 (코팅 경계 : 팁의 은색부분과 몸체 부분이 만나는 경계)
+- 코팅 경계점
 - 코팅 → 끝 방향
 
 **출력:** L/R 픽셀 좌표 쌍이다. 3D 변환(5단계)은 아직 오차를 줄이는 중이라 꺼 두었다(`tip2d/lift3d.py`).
@@ -11,7 +11,7 @@
 ## 전체 시스템에서의 위치
 ```
 [오프라인] GS 모델 → semantic 정의 (semantic vector, 팁 6점 profile)          objects/
-[온라인]   YOLO → SAM2 → DINOv2 검색 → REDI-Match → PnP → GS refine = pose    (별도 pose 저장소)
+[온라인]   YOLO → SAM2 → DINOv2 검색 → EDM → PnP → GS refine = pose           (별도 pose 저장소)
            pose + SAM 마스크 + L/R 영상 → 2D 팁 측정                           ← 이 저장소
            2D → 3D 끝점 / 방향                                                  (비활성, lift3d.py)
 ```
@@ -44,9 +44,24 @@ flowchart TD
 - 보정된 스테레오에서는 같은 점이 L과 R에서 같은 행에 있다. 4단계의 선택은 모두 이 성질을 쓴다.
 - 단계별 방법, 상수, 그림은 [docs/PIPELINE.md](docs/PIPELINE.md)에 있다.
 
+## 문서와 발표 자료
+
+| 문서 | 내용 |
+|---|---|
+| [단계별 파이프라인](docs/PIPELINE.md) | 3.1~3.10과 4.1~4.4의 처리 로직, 상수, 단계별 결과 그림 |
+| [알고리즘 설명 PPT](docs/Semantic_Tip2D_현황.pptx) | 교수님 보고용 22장 자료. 구현 범위, 코드 구조, 속도, VETUS/pink 2D 결과와 한계 |
+| [알고리즘 설명 PDF](docs/Semantic_Tip2D_현황.pdf) | PPT와 같은 내용의 열람용 PDF |
+| [`docs/figures/`](docs/figures/) | 투영, 정렬, 법선 탐색, 사슬 추적, ridge, 코팅 경계, 스테레오 선택의 원본 그림 |
+
+PPT에는 특히 다음 내용을 그림과 함께 자세히 설명한다.
+- 닮음 변환: 회전, 균일 배율, 평행이동으로 모델 윤곽을 영상 edge에 정렬하는 방법
+- 3.5 법선 탐색: `g=(gx, gy)`, 윤곽 단위 법선 `n`, `|g·n|` edge score와 robust line fitting
+- 3.6~3.8: Canny least-turn 사슬 추적, U-turn 기반 끝점 후보, 밝기 ridge 연장
+- 클릭 GT 대비 VETUS/pink의 2D endpoint·코팅 경계 오차와 GPU/CPU 처리 시간
+
 | 모듈 | 내용 |
 |---|---|
-| `tip2d/pipeline.py` | `detect_tips_2d`: 스테레오 한 쌍의 전체 흐름 (25줄) |
+| `tip2d/pipeline.py` | `detect_tips_2d`: 스테레오 한 쌍의 전체 흐름 |
 | `tip2d/view.py` | 3.1~3.3, 3.5~3.10: view 하나에서 하는 일 |
 | `tip2d/alignment.py`, `align_gpu.py` | 3.4 정렬 (CPU / GPU, 같은 결과) |
 | `tip2d/stereo.py` | 4.1~4.4: 두 view를 함께 보는 선택, 2D 결과 생성 |
@@ -137,6 +152,6 @@ configs/camera/     스테레오 보정 (ZED Mini, HD1080)
 objects/<name>/     물체 정의 (semantic_axis.json, tip_profile.json; GS 모델 좌표)
 scripts/            실행, 기준 결과 비교
 reference/          기준 결과 (0921 query)
-docs/               단계별 설명 PIPELINE.md, 그림
+docs/               단계별 설명, 발표용 PPT/PDF, 단계별 그림
 data/               GS 모델, query, pose 결과 (로컬, git 제외)
 ```
